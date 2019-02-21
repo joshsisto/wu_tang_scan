@@ -25,7 +25,8 @@ def check_site_change():
     # parse the downloaded homepage and grab all text, then,
     # soup = BeautifulSoup(response.text, "lxml")
     # print(response.text)
-    with open('log_2.txt', 'w') as f:
-        print("log_2.txt", response.text, file=f)
+    with open('log_3.txt', 'w') as f:
+        print("log_3.txt", response.text, file=f)
+
 
 check_site_change()
