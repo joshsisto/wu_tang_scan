@@ -69,10 +69,10 @@ def scan_website():
 # print(len(nmap_results))
 
 
-spd_tst()
+# spd_tst()
 # scan_website()
 # get_ip_addr()
-#nmap_net_scan()
+nmap_net_scan()
 
 
 
