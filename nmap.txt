@@ -1,0 +1,339 @@
+Starting Nmap 7.70 ( https://nmap.org ) at 2019-02-19 20:49 PST
+Warning: 192.168.88.232 giving up on port because retransmission cap hit (10).
+Nmap scan report for 192.168.88.1
+Host is up (0.00039s latency).
+Not shown: 992 closed ports
+PORT     STATE    SERVICE
+21/tcp   open     ftp
+22/tcp   open     ssh
+23/tcp   open     telnet
+53/tcp   filtered domain
+80/tcp   open     http
+443/tcp  open     https
+2000/tcp open     cisco-sccp
+8291/tcp open     unknown
+MAC Address: D4:CA:6D:BE:5E:4B (Routerboard.com)
+Device type: general purpose
+Running: Linux 2.6.X|3.X
+OS CPE: cpe:/o:linux:linux_kernel:2.6 cpe:/o:linux:linux_kernel:3
+OS details: Linux 2.6.32 - 3.10
+Network Distance: 1 hop
+
+Nmap scan report for 192.168.88.5
+Host is up (0.00037s latency).
+Not shown: 996 closed ports
+PORT      STATE    SERVICE
+22/tcp    open     ssh
+53/tcp    filtered domain
+80/tcp    open     http
+20005/tcp open     btx
+MAC Address: 50:C7:BF:5F:D4:2F (Tp-link Technologies)
+Device type: general purpose
+Running: Linux 2.6.X
+OS CPE: cpe:/o:linux:linux_kernel:2.6
+OS details: Linux 2.6.9 - 2.6.33
+Network Distance: 1 hop
+
+Nmap scan report for 192.168.88.10
+Host is up (0.00085s latency).
+Not shown: 989 filtered ports
+PORT     STATE SERVICE
+88/tcp   open  kerberos-sec
+135/tcp  open  msrpc
+139/tcp  open  netbios-ssn
+389/tcp  open  ldap
+445/tcp  open  microsoft-ds
+464/tcp  open  kpasswd5
+593/tcp  open  http-rpc-epmap
+636/tcp  open  ldapssl
+3268/tcp open  globalcatLDAP
+3269/tcp open  globalcatLDAPssl
+3389/tcp open  ms-wbt-server
+MAC Address: 00:15:5D:58:8D:02 (Microsoft)
+Warning: OSScan results may be unreliable because we could not find at least 1 open and 1 closed port
+Device type: general purpose
+Running: Microsoft Windows 2016
+OS CPE: cpe:/o:microsoft:windows_server_2016
+OS details: Microsoft Windows Server 2016
+Network Distance: 1 hop
+
+Nmap scan report for 192.168.88.118
+Host is up (0.0030s latency).
+Not shown: 993 closed ports
+PORT     STATE    SERVICE
+53/tcp   filtered domain
+555/tcp  filtered dsf
+880/tcp  filtered unknown
+2034/tcp filtered scoremgr
+5214/tcp filtered unknown
+5357/tcp filtered wsdapi
+8081/tcp filtered blackice-icecap
+MAC Address: 38:01:95:8E:99:19 (Samsung Electronics)
+Too many fingerprints match this host to give specific OS details
+Network Distance: 1 hop
+
+Nmap scan report for 192.168.88.119
+Host is up (0.00081s latency).
+Not shown: 998 filtered ports
+PORT     STATE SERVICE
+135/tcp  open  msrpc
+3389/tcp open  ms-wbt-server
+MAC Address: 00:15:5D:58:8D:03 (Microsoft)
+Warning: OSScan results may be unreliable because we could not find at least 1 open and 1 closed port
+Device type: specialized|general purpose
+Running (JUST GUESSING): AVtech embedded (87%), FreeBSD 10.X (85%), Microsoft Windows XP (85%)
+OS CPE: cpe:/o:freebsd:freebsd:10.3 cpe:/o:microsoft:windows_xp::sp2
+Aggressive OS guesses: AVtech Room Alert 26W environmental monitor (87%), FreeBSD 10.3-STABLE (85%), Microsoft Windows XP SP2 (85%)
+No exact OS matches for host (test conditions non-ideal).
+Network Distance: 1 hop
+
+Nmap scan report for 192.168.88.135
+Host is up (0.0056s latency).
+Not shown: 997 closed ports
+PORT     STATE    SERVICE
+53/tcp   filtered domain
+5555/tcp open     freeciv
+8009/tcp open     ajp13
+MAC Address: C4:95:00:03:CF:17 (Unknown)
+Device type: media device|phone
+Running: Amazon embedded, CyanogenMod 12.X, Google Android 5.X
+OS CPE: cpe:/o:cyanogenmod:cyanogenmod:12 cpe:/o:google:android:5.0.2
+OS details: Amazon Kindle Paperwhite, CyanogenMod 12 (Android 5.0.2)
+Network Distance: 1 hop
+
+Nmap scan report for 192.168.88.141
+Host is up (0.00060s latency).
+Not shown: 995 filtered ports
+PORT     STATE SERVICE
+135/tcp  open  msrpc
+139/tcp  open  netbios-ssn
+445/tcp  open  microsoft-ds
+2179/tcp open  vmrdp
+3389/tcp open  ms-wbt-server
+MAC Address: 60:A4:4C:60:BF:05 (Asustek Computer)
+Warning: OSScan results may be unreliable because we could not find at least 1 open and 1 closed port
+Device type: general purpose
+Running (JUST GUESSING): Microsoft Windows 2008|XP (86%)
+OS CPE: cpe:/o:microsoft:windows_server_2008::sp1 cpe:/o:microsoft:windows_server_2008:r2 cpe:/o:microsoft:windows_xp::sp2
+Aggressive OS guesses: Microsoft Windows Server 2008 SP1 or Windows Server 2008 R2 (86%), Microsoft Windows XP SP2 (85%)
+No exact OS matches for host (test conditions non-ideal).
+Network Distance: 1 hop
+
+Nmap scan report for 192.168.88.146
+Host is up (0.00059s latency).
+Not shown: 999 closed ports
+PORT   STATE    SERVICE
+53/tcp filtered domain
+MAC Address: C8:63:F1:7F:DE:20 (Sony Interactive Entertainment)
+Device type: firewall|general purpose|game console
+Running: Cisco AsyncOS 7.X, FreeBSD 10.X|6.X|7.X|8.X|9.X, Sony embedded
+OS CPE: cpe:/h:cisco:ironport_c650 cpe:/o:cisco:asyncos:7.0.1 cpe:/o:freebsd:freebsd:10.2 cpe:/h:sony:playstation_4 cpe:/o:freebsd:freebsd:6.2 cpe:/o:freebsd:freebsd:7.0:beta2 cpe:/o:freebsd:freebsd:8.2 cpe:/o:freebsd:freebsd:9.1
+Too many fingerprints match this host to give specific OS details
+Network Distance: 1 hop
+
+Nmap scan report for 192.168.88.159
+Host is up (0.0028s latency).
+Not shown: 997 closed ports
+PORT     STATE    SERVICE
+53/tcp   filtered domain
+7676/tcp open     imqbrokerd
+8080/tcp open     http-proxy
+MAC Address: 40:16:3B:B2:12:A1 (Samsung Electronics)
+Device type: general purpose
+Running: Linux 2.6.X|3.X
+OS CPE: cpe:/o:linux:linux_kernel:2.6 cpe:/o:linux:linux_kernel:3
+OS details: Linux 2.6.32 - 3.10
+Network Distance: 1 hop
+
+Nmap scan report for 192.168.88.167
+Host is up (0.00056s latency).
+Not shown: 994 closed ports
+PORT      STATE    SERVICE
+22/tcp    open     ssh
+53/tcp    filtered domain
+5900/tcp  open     vnc
+8080/tcp  open     http-proxy
+8081/tcp  open     blackice-icecap
+10000/tcp open     snet-sensor-mgmt
+MAC Address: B8:27:EB:42:18:E5 (Raspberry Pi Foundation)
+Device type: general purpose
+Running: Linux 3.X|4.X
+OS CPE: cpe:/o:linux:linux_kernel:3 cpe:/o:linux:linux_kernel:4
+OS details: Linux 3.2 - 4.9
+Network Distance: 1 hop
+
+Nmap scan report for 192.168.88.168
+Host is up (0.0033s latency).
+Not shown: 993 closed ports
+PORT      STATE    SERVICE
+22/tcp    open     ssh
+53/tcp    filtered domain
+139/tcp   open     netbios-ssn
+445/tcp   open     microsoft-ds
+5000/tcp  open     upnp
+5900/tcp  open     vnc
+10000/tcp open     snet-sensor-mgmt
+MAC Address: B8:27:EB:4E:19:70 (Raspberry Pi Foundation)
+Device type: general purpose
+Running: Linux 3.X|4.X
+OS CPE: cpe:/o:linux:linux_kernel:3 cpe:/o:linux:linux_kernel:4
+OS details: Linux 3.2 - 4.9
+Network Distance: 1 hop
+
+Nmap scan report for 192.168.88.169
+Host is up (0.00044s latency).
+Not shown: 993 closed ports
+PORT      STATE    SERVICE
+22/tcp    open     ssh
+53/tcp    filtered domain
+139/tcp   open     netbios-ssn
+445/tcp   open     microsoft-ds
+5000/tcp  open     upnp
+5900/tcp  open     vnc
+10000/tcp open     snet-sensor-mgmt
+MAC Address: B8:27:EB:1B:4C:25 (Raspberry Pi Foundation)
+Device type: general purpose
+Running: Linux 3.X|4.X
+OS CPE: cpe:/o:linux:linux_kernel:3 cpe:/o:linux:linux_kernel:4
+OS details: Linux 3.2 - 4.9
+Network Distance: 1 hop
+
+Nmap scan report for 192.168.88.196
+Host is up (0.065s latency).
+All 1000 scanned ports on 192.168.88.196 are filtered
+MAC Address: D4:2C:3D:07:8F:37 (Sky Light Digital Limited)
+Too many fingerprints match this host to give specific OS details
+Network Distance: 1 hop
+
+Nmap scan report for 192.168.88.202
+Host is up (0.0044s latency).
+Not shown: 997 closed ports
+PORT      STATE    SERVICE
+22/tcp    open     ssh
+53/tcp    filtered domain
+10000/tcp open     snet-sensor-mgmt
+MAC Address: B8:27:EB:D5:E2:D7 (Raspberry Pi Foundation)
+Device type: general purpose
+Running: Linux 3.X|4.X
+OS CPE: cpe:/o:linux:linux_kernel:3 cpe:/o:linux:linux_kernel:4
+OS details: Linux 3.2 - 4.9
+Network Distance: 1 hop
+
+Nmap scan report for 192.168.88.227
+Host is up (0.012s latency).
+Not shown: 999 closed ports
+PORT   STATE    SERVICE
+53/tcp filtered domain
+MAC Address: AC:22:0B:47:2D:26 (Asustek Computer)
+Too many fingerprints match this host to give specific OS details
+Network Distance: 1 hop
+
+Nmap scan report for 192.168.88.232
+Host is up (0.0095s latency).
+Not shown: 992 closed ports
+PORT      STATE    SERVICE
+49/tcp    filtered tacacs
+53/tcp    filtered domain
+1055/tcp  filtered ansyslmd
+1122/tcp  filtered availant-mgr
+5815/tcp  filtered unknown
+16992/tcp filtered amt-soap-http
+56737/tcp filtered unknown
+62078/tcp open     iphone-sync
+MAC Address: AC:E4:B5:89:E0:35 (Apple)
+No exact OS matches for host (If you know what OS is running on it, see https://nmap.org/submit/ ).
+TCP/IP fingerprint:
+OS:SCAN(V=7.70%E=4%D=2/19%OT=62078%CT=1%CU=32816%PV=Y%DS=1%DC=D%G=Y%M=ACE4B
+OS:5%TM=5C6CDDAF%P=x86_64-apple-darwin13.4.0)SEQ(SP=100%GCD=1%ISR=10C%TI=Z%
+OS:CI=RD%II=RI%TS=A)OPS(O1=M5B4NW6NNT11SLL%O2=M5B4NW6NNT11SLL%O3=M5B4NW6NNT
+OS:11%O4=M5B4NW6NNT11SLL%O5=M5B4NW6NNT11SLL%O6=M5B4NNT11SLL)WIN(W1=FFFF%W2=
+OS:FFFF%W3=FFFF%W4=FFFF%W5=FFFF%W6=FFFF)ECN(R=Y%DF=Y%T=40%W=FFFF%O=M5B4NW6S
+OS:LL%CC=N%Q=)T1(R=Y%DF=Y%T=40%S=O%A=S+%F=AS%RD=0%Q=)T2(R=N)T3(R=N)T4(R=Y%D
+OS:F=Y%T=40%W=0%S=A%A=Z%F=R%O=%RD=0%Q=)T5(R=Y%DF=N%T=40%W=0%S=Z%A=S+%F=AR%O
+OS:=%RD=0%Q=)T6(R=Y%DF=Y%T=40%W=0%S=A%A=Z%F=R%O=%RD=0%Q=)T7(R=Y%DF=N%T=40%W
+OS:=0%S=Z%A=S%F=AR%O=%RD=0%Q=)U1(R=Y%DF=N%T=40%IPL=38%UN=0%RIPL=G%RID=G%RIP
+OS:CK=G%RUCK=0%RUD=G)IE(R=Y%DFI=S%T=40%CD=S)
+
+Network Distance: 1 hop
+
+Nmap scan report for 192.168.88.248
+Host is up (0.00038s latency).
+Not shown: 995 closed ports
+PORT     STATE    SERVICE
+22/tcp   open     ssh
+53/tcp   filtered domain
+80/tcp   open     http
+111/tcp  open     rpcbind
+5900/tcp open     vnc
+MAC Address: D4:BE:D9:E3:63:DE (Dell)
+Device type: general purpose
+Running: Linux 3.X|4.X
+OS CPE: cpe:/o:linux:linux_kernel:3 cpe:/o:linux:linux_kernel:4
+OS details: Linux 3.2 - 4.9
+Network Distance: 1 hop
+
+Nmap scan report for 192.168.88.254
+Host is up (0.00082s latency).
+All 1000 scanned ports on 192.168.88.254 are filtered
+MAC Address: 5C:AD:76:60:84:AB (Unknown)
+Too many fingerprints match this host to give specific OS details
+Network Distance: 1 hop
+
+Nmap scan report for 192.168.88.191
+Host is up (0.00018s latency).
+Not shown: 992 closed ports
+PORT      STATE SERVICE
+22/tcp    open  ssh
+88/tcp    open  kerberos-sec
+445/tcp   open  microsoft-ds
+631/tcp   open  ipp
+3283/tcp  open  netassistant
+5900/tcp  open  vnc
+9091/tcp  open  xmltec-xmlmail
+49175/tcp open  unknown
+No exact OS matches for host (If you know what OS is running on it, see https://nmap.org/submit/ ).
+TCP/IP fingerprint:
+OS:SCAN(V=7.70%E=4%D=2/19%OT=22%CT=1%CU=38410%PV=Y%DS=0%DC=L%G=Y%TM=5C6CDDC
+OS:5%P=x86_64-apple-darwin13.4.0)SEQ(SP=105%GCD=1%ISR=10E%TI=Z%CI=RD%II=RI%
+OS:TS=A)SEQ(SP=FB%GCD=1%ISR=110%TI=Z%II=RI%TS=A)OPS(O1=M3FD8NW6NNT11SLL%O2=
+OS:M3FD8NW6NNT11SLL%O3=M3FD8NW6NNT11%O4=M3FD8NW6NNT11SLL%O5=M3FD8NW6NNT11SL
+OS:L%O6=M3FD8NNT11SLL)WIN(W1=FFFF%W2=FFFF%W3=FFFF%W4=FFFF%W5=FFFF%W6=FFFF)E
+OS:CN(R=Y%DF=Y%T=40%W=FFFF%O=M3FD8NW6SLL%CC=N%Q=)T1(R=Y%DF=Y%T=40%S=O%A=S+%
+OS:F=AS%RD=0%Q=)T2(R=N)T3(R=N)T4(R=Y%DF=Y%T=40%W=0%S=A%A=Z%F=R%O=%RD=0%Q=)T
+OS:4(R=N)T5(R=Y%DF=N%T=40%W=0%S=Z%A=S+%F=AR%O=%RD=0%Q=)T6(R=Y%DF=Y%T=40%W=0
+OS:%S=A%A=Z%F=R%O=%RD=0%Q=)T6(R=N)T7(R=Y%DF=N%T=40%W=0%S=Z%A=S%F=AR%O=%RD=0
+OS:%Q=)T7(R=N)U1(R=Y%DF=N%T=40%IPL=38%UN=0%RIPL=G%RID=G%RIPCK=Z%RUCK=0%RUD=
+OS:G)IE(R=Y%DFI=S%T=40%CD=S)
+
+Network Distance: 0 hops
+
+Nmap scan report for 192.168.88.217
+Host is up (0.00018s latency).
+Not shown: 810 closed ports, 182 filtered ports
+PORT      STATE SERVICE
+22/tcp    open  ssh
+88/tcp    open  kerberos-sec
+445/tcp   open  microsoft-ds
+631/tcp   open  ipp
+3283/tcp  open  netassistant
+5900/tcp  open  vnc
+9091/tcp  open  xmltec-xmlmail
+49175/tcp open  unknown
+No exact OS matches for host (If you know what OS is running on it, see https://nmap.org/submit/ ).
+TCP/IP fingerprint:
+OS:SCAN(V=7.70%E=4%D=2/19%OT=22%CT=1%CU=40955%PV=Y%DS=0%DC=L%G=Y%TM=5C6CDDD
+OS:7%P=x86_64-apple-darwin13.4.0)SEQ(SP=102%GCD=1%ISR=107%TI=Z%CI=RD%II=RI%
+OS:TS=A)SEQ(SP=101%GCD=1%ISR=10E%TI=Z%II=RI%TS=A)OPS(O1=M3FD8NW6NNT11SLL%O2
+OS:=M3FD8NW6NNT11SLL%O3=M3FD8NW6NNT11%O4=M3FD8NW6NNT11SLL%O5=M3FD8NW6NNT11S
+OS:LL%O6=M3FD8NNT11SLL)WIN(W1=FFFF%W2=FFFF%W3=FFFF%W4=FFFF%W5=FFFF%W6=FFFF)
+OS:ECN(R=Y%DF=Y%T=40%W=FFFF%O=M3FD8NW6SLL%CC=N%Q=)T1(R=Y%DF=Y%T=40%S=O%A=S+
+OS:%F=AS%RD=0%Q=)T2(R=N)T3(R=N)T4(R=Y%DF=Y%T=40%W=0%S=A%A=Z%F=R%O=%RD=0%Q=)
+OS:T4(R=N)T5(R=Y%DF=N%T=40%W=0%S=Z%A=S+%F=AR%O=%RD=0%Q=)T6(R=Y%DF=Y%T=40%W=
+OS:0%S=A%A=Z%F=R%O=%RD=0%Q=)T6(R=N)T7(R=Y%DF=N%T=40%W=0%S=Z%A=S%F=AR%O=%RD=
+OS:0%Q=)T7(R=N)U1(R=Y%DF=N%T=40%IPL=38%UN=0%RIPL=G%RID=G%RIPCK=Z%RUCK=0%RUD
+OS:=G)IE(R=Y%DFI=S%T=40%CD=S)
+
+Network Distance: 0 hops
+
+OS detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+Nmap done: 256 IP addresses (20 hosts up) scanned in 389.36 seconds

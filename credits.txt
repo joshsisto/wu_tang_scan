@@ -1,0 +1,8 @@
+# Identify OS
+https://www.webucator.com/how-to/how-check-the-operating-system-with-python.cfm
+
+# Regex
+https://www.regular-expressions.info/ip.html
+
+# Python Subprocess
+https://stackoverflow.com/questions/3503879/assign-output-of-os-system-to-a-variable-and-prevent-it-from-being-displayed-on
