@@ -1,5 +1,6 @@
 # Import requests (to download the page)
 import requests
+import filecmp
 
 # Import BeautifulSoup (to parse what we download)
 from bs4 import BeautifulSoup
@@ -25,8 +26,12 @@ def check_site_change():
     # parse the downloaded homepage and grab all text, then,
     # soup = BeautifulSoup(response.text, "lxml")
     # print(response.text)
-    with open('log_3.txt', 'w') as f:
-        print("log_3.txt", response.text, file=f)
+    with open('log_2.html', 'w') as f:
+        print(response.text, file=f)
 
 
 check_site_change()
+
+
+compare = filecmp.cmp("log_1.txt", "log_2.txt", shallow=False)
+print(compare)
