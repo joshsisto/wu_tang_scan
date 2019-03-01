@@ -16,7 +16,7 @@ import smtplib
 # while this is true (it is true by default),
 def check_site_change():
     # set the url as VentureBeat,
-    url = "http://resume.joshsisto.com"
+    url = "https://resume.joshsisto.com"
     # set the headers like we are a browser,
     headers = {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_2) AppleWebKit/537.36 (KHTML, like Gecko)'
                              ' Chrome/72.0.3626.109 Safari/537.36'}
