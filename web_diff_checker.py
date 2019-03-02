@@ -2,6 +2,7 @@
 import requests
 import filecmp
 import time
+import sys
 import datetime
 import glob
 import collections
@@ -15,9 +16,29 @@ Record = collections.namedtuple(
 )
 
 
+def get_platform():
+    platforms = {
+        'linux1': 'Linux',
+        'linux2': 'Linux',
+        'darwin': 'OS X',
+        'win32': 'Windows'
+    }
+    if sys.platform not in platforms:
+        return sys.platform
+
+    return platforms[sys.platform]
+
+
+platform = get_platform()
+print(platform)
+
+if platform == 'OS X':
+    print('you are superior')
+
+
 def get_tstamp():
     ts = time.time()
-    st = datetime.datetime.fromtimestamp(ts).strftime('%Y-%m-%d_%H:%M:%S')
+    st = datetime.datetime.fromtimestamp(ts).strftime('%Y-%m-%d_%H-%M-%S')
     return st
 
 
