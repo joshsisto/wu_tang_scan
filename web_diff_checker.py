@@ -4,7 +4,15 @@ import filecmp
 import time
 import datetime
 import glob
+import collections
+import pandas as pd
 from bs4 import BeautifulSoup
+
+
+Record = collections.namedtuple(
+    'Record',
+    'site,time_stamp'
+)
 
 
 def get_tstamp():
@@ -16,7 +24,7 @@ def get_tstamp():
 def check_site_change():
     """Check url for web changes"""
     # Get url and url name
-    url = "https://joshsisto.com"
+    url = "https://resume.joshsisto.com"
     url_name = url[8:]
     print(f'Requesting page {url_name}')
     tstamp = get_tstamp()
@@ -25,11 +33,12 @@ def check_site_change():
                              ' Chrome/72.0.3626.109 Safari/537.36'}
     # download the page
     response = requests.get(url, headers=headers)
-    with open(f'{url_name}__{tstamp}.txt', 'w') as f:
+    # save downloaded page as a .txt file
+    with open(f'./logs/{url_name}__{tstamp}.txt', 'w') as f:
         print(response.text, file=f)
 
 
-check_site_change()
+# check_site_change()
 
 # compare = filecmp.cmp("log_1.txt", "log_2.txt", shallow=True)
 # print(compare)
@@ -38,18 +47,41 @@ check_site_change()
 def check_logs():
     """Check local directory for previous url scans"""
     # create list prev_scans using glob on the local directory
-    prev_scans = glob.glob('*.txt')
-    fs_lst = []
+    prev_scans = glob.glob('./logs/*.txt')
+    txt_lst = []
+    # iterate through .txt files and split them if they contain __ (dunder) and append to fs_lst
     for scan_item in prev_scans:
         split_scan = scan_item.split("__")
-        fs_lst.append(split_scan)
-    f_lst = []
-    for i in fs_lst:
+        txt_lst.append(split_scan)
+    log_lst = []
+    # trim off the beginning of the web name and remove .txt from timestamp
+    for i in txt_lst:
+        i[0] = i[0][7:]
+        i[1] = i[1][:-4]
+        # if there is more than one item in the list append it to f_lst
         if len(i) > 1:
-            f_lst.append(i)
-    return f_lst
+            log_lst.append(i)
+    # for i in log_lst:
+    #     i[0] = i[0][7:]
+    #     i[1] = i[1][:-4]
+
+    return log_lst
 
 
-something = check_logs()
-print(something)
+logs = check_logs()
+print(logs)
+print()
+print()
+
+
+labels = ['site', 'time_stamp']
+
+df = pd.DataFrame.from_records(logs, columns=labels)
+
+print(df)
+# for log in logs:
+#     print(log)
+    # for l in log:
+    #     print(l)
+
 
