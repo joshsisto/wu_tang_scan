@@ -5,15 +5,8 @@ import time
 import sys
 import datetime
 import glob
-import collections
 import pandas as pd
 from bs4 import BeautifulSoup
-
-
-Record = collections.namedtuple(
-    'Record',
-    'site,time_stamp'
-)
 
 
 def get_platform():
@@ -33,7 +26,7 @@ platform = get_platform()
 print(platform)
 
 if platform == 'OS X':
-    print('you are superior')
+    print('you are using OS X. You are superior')
 
 
 def get_tstamp():
@@ -45,7 +38,7 @@ def get_tstamp():
 def check_site_change():
     """Check url for web changes"""
     # Get url and url name
-    url = "https://resume.joshsisto.com"
+    url = "https://packsforcoldbacks.org"
     url_name = url[8:]
     print(f'Requesting page {url_name}')
     tstamp = get_tstamp()
@@ -64,7 +57,6 @@ def check_site_change():
 # compare = filecmp.cmp("log_1.txt", "log_2.txt", shallow=True)
 # print(compare)
 
-
 def check_logs():
     """Check local directory for previous url scans"""
     # create list prev_scans using glob on the local directory
@@ -82,27 +74,23 @@ def check_logs():
         # if there is more than one item in the list append it to f_lst
         if len(i) > 1:
             log_lst.append(i)
-    # for i in log_lst:
-    #     i[0] = i[0][7:]
-    #     i[1] = i[1][:-4]
-
     return log_lst
 
 
 logs = check_logs()
-print(logs)
-print()
-print()
 
 
+# take the site and time_stamp column and combine them to remake the filename
+def txt_sites(site, time_stamp):
+    return site + "__" + time_stamp + ".txt"
+
+
+# data frame column names
 labels = ['site', 'time_stamp']
-
+# create the dataframe from the logs variable (check_logs())
 df = pd.DataFrame.from_records(logs, columns=labels)
-
-print(df)
-# for log in logs:
-#     print(log)
-    # for l in log:
-    #     print(l)
-
-
+# create the f_name column by using the txt_sites function with a lambda
+df['f_name'] = df.apply(lambda x: txt_sites(x['site'], x['time_stamp']), axis=1)
+# create a new variable df_sort and sort the original dataframe based off of the f_name column
+df_sort = df.sort_values(["f_name"], ascending=False)
+print(df_sort)
