@@ -25,10 +25,6 @@ def get_platform():
 platform = get_platform()
 print(f"Platform:{platform}")
 
-if platform == 'OS X':
-    print('you are using OS X. You are superior')
-
-
 unix_dir = './logs/'
 win_dir = '.\\logs\\'
 
@@ -97,10 +93,10 @@ def txt_sites(site, time_stamp):
 labels = ['site', 'time_stamp']
 # create the dataframe from the logs variable (check_logs())
 df = pd.DataFrame.from_records(logs, columns=labels)
-# create the f_name column by using the txt_sites function with a lambda
-df['f_name'] = df.apply(lambda x: txt_sites(x['site'], x['time_stamp']), axis=1)
-# create a new variable df_sort and sort the original dataframe based off of the f_name column
-df_sort = df.sort_values(["f_name"], ascending=False)
+# create the file_name column by using the txt_sites function with a lambda
+df['file_name'] = df.apply(lambda x: txt_sites(x['site'], x['time_stamp']), axis=1)
+# create a new variable df_sort and sort the original dataframe based off of the file_name column
+df_sort = df.sort_values(["file_name"], ascending=False)
 print(df_sort)
 
 
