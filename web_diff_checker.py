@@ -24,9 +24,10 @@ def get_platform():
 
 platform = get_platform()
 print(f"Platform:{platform}")
-
-unix_dir = './logs/'
-win_dir = '.\\logs\\'
+if platform == 'OS X' or 'Linux':
+    logs_dir = './logs/'
+if platform == 'Windows':
+    logs_dir = '.\\logs\\'
 
 
 def get_tstamp():
@@ -48,12 +49,8 @@ def check_site_change():
     # download the page
     response = requests.get(url, headers=headers)
     # save downloaded page as a .txt file
-    if platform == 'OS X' or 'Linux':
-        with open(f'{unix_dir}{url_name}__{tstamp}.txt', 'w') as f:
-            print(response.text, file=f)
-    if platform == 'Windows':
-        with open(f'{win_dir}{url_name}__{tstamp}.txt', 'w') as f:
-            print(response.text, file=f)
+    with open(f'{logs_dir}{url_name}__{tstamp}.txt', 'w') as f:
+        print(response.text, file=f)
 
 
 check_site_change()
