@@ -39,7 +39,7 @@ def get_tstamp():
 def check_site_change():
     """Check url for web changes"""
     # Get url and url name
-    url = "https://joshsisto.com"
+    url = "https://packsforcoldbacks.org"
     url_name = url[8:]
     print(f'Requesting page {url_name}')
     tstamp = get_tstamp()
@@ -53,7 +53,7 @@ def check_site_change():
         print(response.text, file=f)
 
 
-check_site_change()
+# check_site_change()
 
 # compare = filecmp.cmp("log_1.txt", "log_2.txt", shallow=True)
 # print(compare)
@@ -92,9 +92,13 @@ labels = ['site', 'time_stamp']
 df = pd.DataFrame.from_records(logs, columns=labels)
 # create the file_name column by using the txt_sites function with a lambda
 df['file_name'] = df.apply(lambda x: txt_sites(x['site'], x['time_stamp']), axis=1)
-# create a new variable df_sort and sort the original dataframe based off of the file_name column
-df_sort = df.sort_values(["file_name"], ascending=False)
-print(df_sort)
+# sort dataframe based off of the file_name column
+df.sort_values(["file_name"], ascending=False)
+# print(df)
+# print(type(df))
 
+# print(df.iloc[[0]])
 
+for index, row in df.iterrows():
+    print(row['site'])
 
