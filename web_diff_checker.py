@@ -23,10 +23,14 @@ def get_platform():
 
 
 platform = get_platform()
-print(platform)
+print(f"Platform:{platform}")
 
 if platform == 'OS X':
     print('you are using OS X. You are superior')
+
+
+unix_dir = './logs/'
+win_dir = '.\\logs\\'
 
 
 def get_tstamp():
@@ -38,7 +42,7 @@ def get_tstamp():
 def check_site_change():
     """Check url for web changes"""
     # Get url and url name
-    url = "https://packsforcoldbacks.org"
+    url = "https://joshsisto.com"
     url_name = url[8:]
     print(f'Requesting page {url_name}')
     tstamp = get_tstamp()
@@ -48,11 +52,15 @@ def check_site_change():
     # download the page
     response = requests.get(url, headers=headers)
     # save downloaded page as a .txt file
-    with open(f'./logs/{url_name}__{tstamp}.txt', 'w') as f:
-        print(response.text, file=f)
+    if platform == 'OS X' or 'Linux':
+        with open(f'{unix_dir}{url_name}__{tstamp}.txt', 'w') as f:
+            print(response.text, file=f)
+    if platform == 'Windows':
+        with open(f'{win_dir}{url_name}__{tstamp}.txt', 'w') as f:
+            print(response.text, file=f)
 
 
-# check_site_change()
+check_site_change()
 
 # compare = filecmp.cmp("log_1.txt", "log_2.txt", shallow=True)
 # print(compare)
