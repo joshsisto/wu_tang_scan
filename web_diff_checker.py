@@ -94,3 +94,6 @@ df['f_name'] = df.apply(lambda x: txt_sites(x['site'], x['time_stamp']), axis=1)
 # create a new variable df_sort and sort the original dataframe based off of the f_name column
 df_sort = df.sort_values(["f_name"], ascending=False)
 print(df_sort)
+
+
+
