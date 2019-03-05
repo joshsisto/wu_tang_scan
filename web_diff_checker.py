@@ -142,6 +142,6 @@ def main():
 site_2_scan = "https://joshsisto.com"
 
 if __name__ == '__main__':
-    # check_site_change(site_2_scan)
+    check_site_change(site_2_scan)
     main()
 
