@@ -70,8 +70,11 @@ def check_site_change():
 
 # check_site_change()
 
-# compare = filecmp.cmp('log_1.txt', 'log_2.txt', shallow=True)
-# print(compare)
+
+def log_compare(log_1, log_2):
+    compare = filecmp.cmp(log_1, log_2, shallow=True)
+    print(compare)
+
 
 def check_logs():
     """Check local directory for previous url scans"""
@@ -112,13 +115,15 @@ if len(logs) > 1:
     df = df.sort_values(['file_name'], ascending=False)
     # reset the index after sorting
     df = df.reset_index(drop=True)
-    # print(df)
+    print(df)
+    # iterate through rows of df
+    for i in range(1, len(df)):
+        # if the sites match compare the files using log_compare()
+        if df.site.loc[i-1] == df.site.loc[i]:
+            print(f'comparing {logs_dir + df.file_name.loc[i-1]} \n'
+                  f'against   {logs_dir + df.file_name.loc[i]} for changes')
+            log_compare(logs_dir + df.file_name.loc[i-1], logs_dir + df.file_name.loc[i])
 
 
-# print(df.iloc[[0]])
-# for index, row in df.iterrows():
-#     print(index, row['file_name'])
 
-    df2 = df
-    print(df2)
 
