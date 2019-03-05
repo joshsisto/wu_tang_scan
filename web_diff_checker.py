@@ -7,6 +7,7 @@ import datetime
 import glob
 import pandas as pd
 import os
+import difflib
 from bs4 import BeautifulSoup
 
 
@@ -59,7 +60,7 @@ def check_site_change(url):
     url_name = url[8:]
     print(f'Requesting page {url_name}')
     tstamp = get_tstamp()
-    # set the headers like we are a browser,
+    # set the headers like we are a browser
     headers = {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_2) AppleWebKit/537.36 (KHTML, like Gecko)'
                              ' Chrome/72.0.3626.109 Safari/537.36'}
     # download the page
@@ -73,6 +74,15 @@ def log_compare(log_1, log_2):
     """compare log_1 and log_2 for differences"""
     compare = filecmp.cmp(log_1, log_2, shallow=True)
     print(compare)
+    return compare
+
+
+def file_diff(text1, text2):
+    """compare files for differences"""  # this is currently comparing filenames instead of the files
+    d = difflib.Differ()
+    diff = d.compare(text1, text2)
+    print("\n".join(diff))
+    return "\n".join(diff)
 
 
 def check_logs():
@@ -80,7 +90,7 @@ def check_logs():
     # create list prev_scans using glob on the local directory
     prev_scans = glob.glob(f'{logs_dir}*.txt')
     txt_lst = []
-    # iterate through .txt files and split them if they contain __ (dunder) and append to fs_lst
+    # iterate through .txt files and split them if they contain __ (dunder) and append to txt_lst
     for scan_item in prev_scans:
         split_scan = scan_item.split('__')
         txt_lst.append(split_scan)
@@ -89,7 +99,7 @@ def check_logs():
     for i in txt_lst:
         i[0] = i[0][7:]
         i[1] = i[1][:-4]
-        # if there is more than one item in the list append it to f_lst
+        # if there is more than one item in the list append it to log_lst
         if len(i) > 1:
             log_lst.append(i)
     return log_lst
@@ -121,11 +131,17 @@ def main():
                 print(f'comparing {logs_dir + df.file_name.loc[i-1]} \n'
                       f'against   {logs_dir + df.file_name.loc[i]} for changes')
                 log_compare(logs_dir + df.file_name.loc[i-1], logs_dir + df.file_name.loc[i])
+                ### This is currently comparing filenames instead of the files themselves ###
+                # if the logs don't match compare them using file_diff()
+                # if log_compare(logs_dir + df.file_name.loc[i-1], logs_dir + df.file_name.loc[i]) == False:
+                #     print('Printing differences')
+                #     file_diff(logs_dir + df.file_name.loc[i-1], logs_dir + df.file_name.loc[i])
+                ###
 
 
 site_2_scan = "https://joshsisto.com"
 
 if __name__ == '__main__':
-    check_site_change(site_2_scan)
+    # check_site_change(site_2_scan)
     main()
 
