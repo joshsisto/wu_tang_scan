@@ -93,12 +93,15 @@ df = pd.DataFrame.from_records(logs, columns=labels)
 # create the file_name column by using the txt_sites function with a lambda
 df['file_name'] = df.apply(lambda x: txt_sites(x['site'], x['time_stamp']), axis=1)
 # sort dataframe based off of the file_name column
-df.sort_values(["file_name"], ascending=False)
+df = df.sort_values(["file_name"], ascending=False)
+# reset the index after sorting
+df = df.reset_index(drop=True)
+
 # print(df)
 # print(type(df))
 
 # print(df.iloc[[0]])
 
 for index, row in df.iterrows():
-    print(row['site'])
+    print(index, row['file_name'])
 
