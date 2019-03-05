@@ -79,10 +79,10 @@ def log_compare(log_1, log_2):
 
 def file_diff(text1, text2):
     """compare files for differences"""  # this is currently comparing filenames instead of the files
-    d = difflib.HtmlDiff()
-    # print(d.make_table(text1, text2))
-    diff = d.make_file(text1, text2)
-    print(diff)
+    diff = difflib.context_diff(text1, text2)
+    delta = ''.join(diff)
+    print(delta)
+    return delta
 
 
 def check_logs():
@@ -131,7 +131,6 @@ def main():
                 print(f'comparing {logs_dir + df.file_name.loc[i-1]} \n'
                       f'against   {logs_dir + df.file_name.loc[i]} for changes')
                 log_compare(logs_dir + df.file_name.loc[i-1], logs_dir + df.file_name.loc[i])
-                ### This is currently comparing filenames instead of the files themselves ###
                 # if the logs don't match compare them using file_diff()
                 if log_compare(logs_dir + df.file_name.loc[i-1], logs_dir + df.file_name.loc[i]) == False:
                     print('Printing differences')
