@@ -6,3 +6,7 @@ https://www.regular-expressions.info/ip.html
 
 # Python Subprocess
 https://stackoverflow.com/questions/3503879/assign-output-of-os-system-to-a-variable-and-prevent-it-from-being-displayed-on
+
+# Directory Checking
+https://stackoverflow.com/questions/273192/how-can-i-safely-create-a-nested-directory-in-python
+
