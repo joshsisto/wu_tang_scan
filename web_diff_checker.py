@@ -18,13 +18,14 @@ def get_platform():
         'win32': 'Windows'
     }
     if sys.platform not in platforms:
+        print(f'Platform: {sys.platform}')
         return sys.platform
 
+    print(f'Platform: {platforms[sys.platform]}')
     return platforms[sys.platform]
 
 
 platform = get_platform()
-print(f'Platform:{platform}')
 if platform == 'OS X' or 'Linux':
     logs_dir = './logs/'
 if platform == 'Windows':
@@ -42,6 +43,7 @@ def ensure_dir(file_path):
         print(f"something fucked up {x}")
 
 
+# check if the logs directory exists
 ensure_dir(logs_dir)
 
 
@@ -51,10 +53,9 @@ def get_tstamp():
     return st
 
 
-def check_site_change():
+def check_site_change(url):
     """Check url for web changes"""
-    # Get url and url name
-    url = 'https://packsforcoldbacks.org'
+    # Get url name without https://
     url_name = url[8:]
     print(f'Requesting page {url_name}')
     tstamp = get_tstamp()
@@ -68,10 +69,8 @@ def check_site_change():
         print(response.text, file=f)
 
 
-# check_site_change()
-
-
 def log_compare(log_1, log_2):
+    """compare log_1 and log_2 for differences"""
     compare = filecmp.cmp(log_1, log_2, shallow=True)
     print(compare)
 
@@ -96,34 +95,37 @@ def check_logs():
     return log_lst
 
 
-logs = check_logs()
-
-
 # take the site and time_stamp column and combine them to remake the filename
 def txt_sites(site, time_stamp):
     return site + '__' + time_stamp + '.txt'
 
 
-if len(logs) > 1:
-    # data frame column names
-    labels = ['site', 'time_stamp']
-    # create the dataframe from the logs variable (check_logs())
-    df = pd.DataFrame.from_records(logs, columns=labels)
-    # create the file_name column by using the txt_sites function with a lambda
-    df['file_name'] = df.apply(lambda x: txt_sites(x['site'], x['time_stamp']), axis=1)
-    # sort dataframe based off of the file_name column
-    df = df.sort_values(['file_name'], ascending=False)
-    # reset the index after sorting
-    df = df.reset_index(drop=True)
-    print(df)
-    # iterate through rows of df
-    for i in range(1, len(df)):
-        # if the sites match compare the files using log_compare()
-        if df.site.loc[i-1] == df.site.loc[i]:
-            print(f'comparing {logs_dir + df.file_name.loc[i-1]} \n'
-                  f'against   {logs_dir + df.file_name.loc[i]} for changes')
-            log_compare(logs_dir + df.file_name.loc[i-1], logs_dir + df.file_name.loc[i])
+def main():
+    logs = check_logs()
+    if len(logs) > 1:
+        # data frame column names
+        labels = ['site', 'time_stamp']
+        # create the dataframe from the logs variable (check_logs())
+        df = pd.DataFrame.from_records(logs, columns=labels)
+        # create the file_name column by using the txt_sites function with a lambda
+        df['file_name'] = df.apply(lambda x: txt_sites(x['site'], x['time_stamp']), axis=1)
+        # sort dataframe based off of the file_name column
+        df = df.sort_values(['file_name'], ascending=False)
+        # reset the index after sorting
+        df = df.reset_index(drop=True)
+        print(df)
+        # iterate through rows of df
+        for i in range(1, len(df)):
+            # if the sites match compare the files using log_compare()
+            if df.site.loc[i-1] == df.site.loc[i]:
+                print(f'comparing {logs_dir + df.file_name.loc[i-1]} \n'
+                      f'against   {logs_dir + df.file_name.loc[i]} for changes')
+                log_compare(logs_dir + df.file_name.loc[i-1], logs_dir + df.file_name.loc[i])
 
 
+site_2_scan = "https://joshsisto.com"
 
+if __name__ == '__main__':
+    check_site_change(site_2_scan)
+    main()
 
