@@ -1,4 +1,10 @@
 # wu_tang_scan
-Network Scanning
+I created this repo to sharpen my python, git, network,
+and web development skills.
 
-Network scanning and website monitoring.
+
+##### network-sniffer.py
+Uses nmap to scan network
+
+##### web_diff_checker.py
+Performs website scans for differences
