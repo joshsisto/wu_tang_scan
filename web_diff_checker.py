@@ -35,7 +35,7 @@ if platform == 'Windows':
 
 def ensure_dir(file_path):
     try:
-        print(f'checking if {file_path} exists')
+        print(f'checking if {file_path} exists\n')
         directory = os.path.dirname(file_path)
         if not os.path.exists(directory):
             print(f'directory {file_path} does not exist. Creating...')
@@ -123,29 +123,32 @@ def main():
         df = df.reset_index(drop=True)
         # create new blank column for diffs_file - This will be used to save .dif files
         df = df.assign(diffs_file="")
-        # iterate through rows of df
-        for i in range(1, len(df)):
-            # if the sites match compare the files using log_compare()
-            if df.site.loc[i-1] == df.site.loc[i]:
-                print(f'comparing {logs_dir + df.file_name.loc[i-1]} \n'
-                      f'against   {logs_dir + df.file_name.loc[i]} for changes')
-                log_compare(logs_dir + df.file_name.loc[i-1], logs_dir + df.file_name.loc[i])
-                # if the logs don't match compare them using file_diff()
-                if log_compare(logs_dir + df.file_name.loc[i-1], logs_dir + df.file_name.loc[i]) == False:
-                    print('Printing differences')
-                    # since the logs don't match we are going to compare them. Each log is set as variable text1 text2
-                    text1 = open(logs_dir + df.file_name.loc[i-1], "r").readlines()
-                    text2 = open(logs_dir + df.file_name.loc[i], "r").readlines()
-                    # compare the two files and save the output as diffs
-                    diffs = file_diff(text1, text2)
-                    # print .dif file based off of filename and new timestamp
-                    print(f'Creating file {logs_dir}{df.file_name.loc[i-1]}_{get_tstamp()}.dif')
-                    print()
-                    # add .dif file to diffs_file column
-                    df.diffs_file.loc[i-1] = f'{df.file_name.loc[i-1]}_{get_tstamp()}.dif'
-                    # create .dif log file
-                    with open(f'{logs_dir}{df.file_name.loc[i-1]}_{get_tstamp()}.dif', 'w') as f:
-                        print(diffs, file=f)
+        # ask if you want to check for matching files and create .dif files
+        create_diffs = input('Would you like to save .dif files? y/n  ').lower()
+        if create_diffs == 'y':
+            # iterate through rows of df
+            for i in range(1, len(df)):
+                # if the sites match compare the files using log_compare()
+                if df.site.loc[i-1] == df.site.loc[i]:
+                    print(f'comparing {logs_dir + df.file_name.loc[i-1]} \n'
+                          f'against   {logs_dir + df.file_name.loc[i]} for changes')
+                    log_compare(logs_dir + df.file_name.loc[i-1], logs_dir + df.file_name.loc[i])
+                    # if the logs don't match compare them using file_diff()
+                    if log_compare(logs_dir + df.file_name.loc[i-1], logs_dir + df.file_name.loc[i]) == False:
+                        print('Printing differences')
+                        # since the logs don't match we are going to compare them. Each log is set as variable text1 text2
+                        text1 = open(logs_dir + df.file_name.loc[i-1], "r").readlines()
+                        text2 = open(logs_dir + df.file_name.loc[i], "r").readlines()
+                        # compare the two files and save the output as diffs
+                        diffs = file_diff(text1, text2)
+                        # print .dif file based off of filename and new timestamp
+                        print(f'Creating file {logs_dir}{df.file_name.loc[i-1]}_{get_tstamp()}.dif')
+                        print()
+                        # add .dif file to diffs_file column
+                        df.diffs_file.loc[i-1] = f'{df.file_name.loc[i-1]}_{get_tstamp()}.dif'
+                        # create .dif log file
+                        with open(f'{logs_dir}{df.file_name.loc[i-1]}_{get_tstamp()}.dif', 'w') as f:
+                            print(diffs, file=f)
         # print dataframe
         print(df)
         # write dataframe to csv
@@ -153,8 +156,10 @@ def main():
 
 
 site_2_scan = "https://joshsisto.com"
+scan_site = input(f'Would you like to scan {site_2_scan}?\n\ny/n  ').lower()
 
 if __name__ == '__main__':
-    # check_site_change(site_2_scan)
+    if scan_site == 'y':
+        check_site_change(site_2_scan)
     main()
 
