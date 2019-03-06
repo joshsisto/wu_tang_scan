@@ -7,6 +7,7 @@ import datetime
 import glob
 import pandas as pd
 import os
+import re
 import difflib
 from bs4 import BeautifulSoup
 
@@ -68,6 +69,13 @@ def check_site_change(url):
     # save downloaded page as a .txt file
     with open(f'{logs_dir}{url_name}__{tstamp}.txt', 'w') as f:
         print(response.text, file=f)
+    # use beautiful soup to extract links
+    links = []
+    soup = BeautifulSoup(response.text)
+    tags = soup.find_all('a')
+    for tag in tags:
+        links.append(tag.get('href'))
+    return links
 
 
 def log_compare(log_1, log_2):
