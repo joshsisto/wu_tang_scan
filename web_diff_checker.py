@@ -73,7 +73,6 @@ def check_site_change(url):
 def log_compare(log_1, log_2):
     """compare log_1 and log_2 for differences"""
     compare = filecmp.cmp(log_1, log_2, shallow=True)
-    print(compare)
     return compare
 
 
@@ -81,7 +80,6 @@ def file_diff(text1, text2):
     """compare files for differences"""  # this is currently comparing filenames instead of the files
     diff = difflib.context_diff(text1, text2)
     delta = ''.join(diff)
-    print(delta)
     return delta
 
 
@@ -123,7 +121,8 @@ def main():
         df = df.sort_values(['file_name'], ascending=False)
         # reset the index after sorting
         df = df.reset_index(drop=True)
-        print(df)
+        # create new blank column for diffs_file - This will be used to save .dif files
+        df = df.assign(diffs_file="")
         # iterate through rows of df
         for i in range(1, len(df)):
             # if the sites match compare the files using log_compare()
@@ -134,14 +133,22 @@ def main():
                 # if the logs don't match compare them using file_diff()
                 if log_compare(logs_dir + df.file_name.loc[i-1], logs_dir + df.file_name.loc[i]) == False:
                     print('Printing differences')
-                    text1 = open(logs_dir + df.file_name.loc[i-1], "r").read()
-                    text2 = open(logs_dir + df.file_name.loc[i], "r").read()
-                    file_diff(text1, text2)
+                    # since the logs don't match we are going to compare them. Each log is set as variable text1 text2
+                    text1 = open(logs_dir + df.file_name.loc[i-1], "r").readlines()
+                    text2 = open(logs_dir + df.file_name.loc[i], "r").readlines()
+                    # compare the two files and save the output as diffs
+                    diffs = file_diff(text1, text2)
+                    # create new dif file based off of filename and new timestamp
+                    print(f'Creating file {logs_dir}{df.file_name.loc[i-1]}_{get_tstamp()}.dif')
+                    print()
+                    with open(f'{logs_dir}{df.file_name.loc[i-1]}_{get_tstamp()}.dif', 'w') as f:
+                        print(diffs, file=f)
+        print(df)
 
 
 site_2_scan = "https://joshsisto.com"
 
 if __name__ == '__main__':
-    check_site_change(site_2_scan)
+    # check_site_change(site_2_scan)
     main()
 
