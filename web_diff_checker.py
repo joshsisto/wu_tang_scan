@@ -138,12 +138,18 @@ def main():
                     text2 = open(logs_dir + df.file_name.loc[i], "r").readlines()
                     # compare the two files and save the output as diffs
                     diffs = file_diff(text1, text2)
-                    # create new dif file based off of filename and new timestamp
+                    # print .dif file based off of filename and new timestamp
                     print(f'Creating file {logs_dir}{df.file_name.loc[i-1]}_{get_tstamp()}.dif')
                     print()
+                    # add .dif file to diffs_file column
+                    df.diffs_file.loc[i-1] = f'{df.file_name.loc[i-1]}_{get_tstamp()}.dif'
+                    # create .dif log file
                     with open(f'{logs_dir}{df.file_name.loc[i-1]}_{get_tstamp()}.dif', 'w') as f:
                         print(diffs, file=f)
+        # print dataframe
         print(df)
+        # write dataframe to csv
+        df.to_csv(f'{logs_dir}df.{get_tstamp()}.csv')
 
 
 site_2_scan = "https://joshsisto.com"
