@@ -70,7 +70,7 @@ def check_site_change(url):
         print(response.text, file=f)
     # use beautiful soup to extract links
     links = []
-    soup = BeautifulSoup(response.text)
+    soup = BeautifulSoup(response.text, 'html.parser')
     tags = soup.find_all('a')
     # append links to links list
     for tag in tags:
