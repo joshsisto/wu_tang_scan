@@ -7,7 +7,6 @@ import datetime
 import glob
 import pandas as pd
 import os
-import re
 import difflib
 from bs4 import BeautifulSoup
 
@@ -73,9 +72,17 @@ def check_site_change(url):
     links = []
     soup = BeautifulSoup(response.text)
     tags = soup.find_all('a')
+    # append links to links list
     for tag in tags:
         links.append(tag.get('href'))
-    return links
+    # get only unique values and sort
+    my_set = set(links)
+    u_links = list(my_set)
+    u_links.sort()
+    # save links as a .lnk file
+    with open(f'{logs_dir}{url_name}__{tstamp}.lnk', 'w') as f:
+        for list_item in u_links:
+            f.write(f'{list_item}\n')
 
 
 def log_compare(log_1, log_2):
