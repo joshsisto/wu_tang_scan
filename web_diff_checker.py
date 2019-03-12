@@ -54,7 +54,7 @@ def get_tstamp():
     return st
 
 
-def check_site_change(url):
+def download_url(url):
     """Check url for web changes"""
     # Get url name without https://
     url_name = url[8:]
@@ -123,7 +123,7 @@ def txt_sites(site, time_stamp):
     return site + '__' + time_stamp + '.txt'
 
 
-def main():
+def scan_logs():
     logs = check_logs()
     if len(logs) > 1:
         # data frame column names
@@ -136,10 +136,11 @@ def main():
         df = df.sort_values(['file_name'], ascending=False)
         # reset the index after sorting
         df = df.reset_index(drop=True)
-        # create new blank column for diffs_file - This will be used to save .dif files
-        df = df.assign(diffs_file="")
+
         # ask if you want to check for matching files and create .dif files
         create_diffs = input('Would you like to save .dif files? y/n  ').lower()
+        # create new blank column for diffs_file - This will be used to save .dif files
+        df = df.assign(diffs_file="")
         if create_diffs == 'y':
             # iterate through rows of df
             for i in range(1, len(df)):
@@ -170,11 +171,13 @@ def main():
         df.to_csv(f'{logs_dir}df.{get_tstamp()}.csv')
 
 
-site_2_scan = "https://joshsisto.com"
+site_2_scan = "https://resume.joshsisto.com"
 scan_site = input(f'Would you like to scan {site_2_scan}?\n\ny/n  ').lower()
+parse_logs = input(f'Would you like to parse {logs_dir}?\n\ny/n  ').lower()
+
 
 if __name__ == '__main__':
     if scan_site == 'y':
-        check_site_change(site_2_scan)
-    main()
-
+        download_url(site_2_scan)
+    if parse_logs == 'y':
+        scan_logs()
