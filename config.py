@@ -7,6 +7,7 @@ import datetime
 
 try:
     OUTPUT_DIR = os.path.abspath(os.getenv('OUTPUT_DIR'))
+    OUTPUT_DIR = os.path.join(OUTPUT_DIR, 'output')
     # print(OUTPUT_DIR)
 except Exception as e:
     OUTPUT_DIR = None
