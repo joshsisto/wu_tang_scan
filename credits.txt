@@ -10,3 +10,8 @@ https://stackoverflow.com/questions/3503879/assign-output-of-os-system-to-a-vari
 # Directory Checking
 https://stackoverflow.com/questions/273192/how-can-i-safely-create-a-nested-directory-in-python
 
+# Borrowed much code here
+https://github.com/pirate/ArchiveBox/blob/master/archivebox/archive.py
+
+# write yourself a git
+https://wyag.thb.lt/

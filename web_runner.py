@@ -2,6 +2,33 @@
 import requests
 from bs4 import BeautifulSoup
 
+from config import OUTPUT_DIR
+
+http_req = 'http://'
+https_req = 'https://'
+test_url = 'https://joshsisto.com'
+
+
+def url_checker(url):
+    if url.startswith(http_req):
+        url_name = url[7:]
+        print('http')
+        return url_name
+    if url.startswith(https_req):
+        url_name = url[8:]
+        print('https')
+        return url_name
+    else:
+        print('not valid http or https URL')
+        return False
+
+
+url_name = url_checker(test_url)
+
+if url_name:
+    print('Valid URL. Do something')
+    print(f'URL Name: {url_name}')
+
 
 def download_url(url):
     """Check url for web changes"""
@@ -32,3 +59,7 @@ def download_url(url):
     with open(f'{logs_dir}{url_name}__{tstamp}.lnk', 'w') as f:
         for list_item in u_links:
             f.write(f'{list_item}\n')
+
+
+# url_checker('httpss://joshsisto.com')
+
