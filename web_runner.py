@@ -80,13 +80,15 @@ def download_url(url):
         for txt in find_files(URL_DIR_NAME, '*.txt'):
             print(f'Found .txt files {txt}')
             txt_lst.append(txt)
+        txt_lst.sort()
         # find html files recursively starting at the URL path
         html_lst = []
         for html in find_files(URL_DIR_NAME, '*.html'):
             print(f'Found .html files {html}')
             html_lst.append(html)
+        html_lst.sort()
         # zip txt and html lists together
-        zipper = zip(txt_lst, html_lst)
+        zipper = zip(html_lst, txt_lst)
         with open(f'{URL_DIR_NAME}{slash}items.csv', 'w') as f:
             writer = csv.writer(f, delimiter=',')
             writer.writerows(zipper)
