@@ -13,7 +13,7 @@ except Exception as e:
     OUTPUT_DIR = None
     # print(f'Exception: {e}')
 
-REPO_DIR = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), '..'))
+REPO_DIR = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__))))
 # print(f'Repo DIR {REPO_DIR}')
 if not OUTPUT_DIR:
     OUTPUT_DIR = os.path.join(REPO_DIR, 'output')
@@ -56,4 +56,14 @@ def get_tstamp():
     ts = time.time()
     st = datetime.datetime.fromtimestamp(ts).strftime('%Y-%m-%d_%H-%M-%S')
     return st
+
+
+def ensure_dir(file_path):
+    try:
+        print(f'checking if {file_path} exists\n')
+        if not os.path.exists(file_path):
+            print(f'directory {file_path} does not exist. Creating...')
+            os.makedirs(file_path)
+    except Exception as x:
+        print(f"something fucked up {x}")
 

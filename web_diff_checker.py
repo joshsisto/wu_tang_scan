@@ -39,7 +39,7 @@ def ensure_dir(file_path):
         directory = os.path.dirname(file_path)
         if not os.path.exists(directory):
             print(f'directory {file_path} does not exist. Creating...')
-            os.makedirs(directory)
+            os.makedirs(file_path)
     except Exception as x:
         print(f"something fucked up {x}")
 
