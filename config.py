@@ -1,7 +1,9 @@
 
 import os
 import sys
+import glob
 import time
+import fnmatch
 import datetime
 
 
@@ -67,3 +69,26 @@ def ensure_dir(file_path):
     except Exception as x:
         print(f"something fucked up {x}")
 
+
+# def check_logs(log_name):
+#     prev_scans = glob.glob(f'{OUTPUT_DIR}/{log_name}*.txt')
+#     txt_lst = []
+#     print(prev_scans)
+#     print(f'{OUTPUT_DIR}/{log_name}')
+#
+#
+# check_logs('joshsisto.com')
+
+def find_files(directory, pattern):
+    for root, dirs, files in os.walk(directory):
+        for basename in files:
+            if fnmatch.fnmatch(basename, pattern):
+                filename = os.path.join(root, basename)
+                yield filename
+
+
+# for txt in find_files(OUTPUT_DIR, '*.txt'):
+#     print(f'Found .txt files {txt}')
+#
+# for html in find_files(OUTPUT_DIR, '*.html'):
+#     print(f'Found .html files {html}')

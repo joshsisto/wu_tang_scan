@@ -1,5 +1,6 @@
 
 import os
+import csv
 import requests
 from bs4 import BeautifulSoup
 
@@ -7,7 +8,8 @@ from config import (
     OUTPUT_DIR,
     get_platform,
     ensure_dir,
-    get_tstamp
+    get_tstamp,
+    find_files
 )
 
 http_req = 'http://'
@@ -68,8 +70,23 @@ def download_url(url):
         my_set = set(links)
         u_links = list(my_set)
         u_links.sort()
-        # save links as a .lnk file
+        # save links as a .txt file
         with open(f'{URL_TM_DIR_NAME}{slash}links.txt', 'w') as f:
             for list_item in u_links:
                 f.write(f'{list_item}\n')
 
+        # find txt files recursively starting at the URL path
+        txt_lst = []
+        for txt in find_files(URL_DIR_NAME, '*.txt'):
+            print(f'Found .txt files {txt}')
+            txt_lst.append(txt)
+        # find html files recursively starting at the URL path
+        html_lst = []
+        for html in find_files(URL_DIR_NAME, '*.html'):
+            print(f'Found .html files {html}')
+            html_lst.append(html)
+        # zip txt and html lists together
+        zipper = zip(txt_lst, html_lst)
+        with open(f'{URL_DIR_NAME}{slash}items.csv', 'w') as f:
+            writer = csv.writer(f, delimiter=',')
+            writer.writerows(zipper)
