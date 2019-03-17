@@ -2,6 +2,7 @@
 from web_runner import download_url
 from scan_and_compare import the_differ, scan_output
 
+
 def main(url):
     download_url(url)
 
@@ -9,10 +10,7 @@ def main(url):
 test_url = 'https://joshsisto.com'
 
 
-
-
 if __name__ == '__main__':
-    # main(test_url)
-    # scan_output()
+    main(test_url)
+    scan_output()
     the_differ()
-
