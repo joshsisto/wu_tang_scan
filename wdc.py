@@ -1,5 +1,5 @@
 
-from web_runner import download_url
+from web_runner import download_url, scan_output, the_differ
 
 
 def main(url):
@@ -12,4 +12,7 @@ test_url = 'https://joshsisto.com'
 
 
 if __name__ == '__main__':
-    main(test_url)
+    # main(test_url)
+    # scan_output()
+    the_differ()
+
