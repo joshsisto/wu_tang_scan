@@ -21,7 +21,7 @@ if platform == 'Windows':
 
 def scan_output():
     """Scan the output directory"""
-    print(f'using scan_output() to scan the output directory: \n{OUTPUT_DIR}\n for previously scanned sites')
+    print(f'using scan_output() to scan the output directory: {OUTPUT_DIR} for previously scanned sites')
     # get list of directories in output. These are the sites that have been scanned
     scanned_sites = os.listdir(OUTPUT_DIR)
     # create a list of full path names
@@ -29,28 +29,43 @@ def scan_output():
     for sc_site in scanned_sites:
         # don't get hidden folders
         if not sc_site.startswith('.'):
+            print(sc_site)
             site_dir = os.path.join(OUTPUT_DIR, sc_site)
             site_dir_lst.append(site_dir)
-
+    print(site_dir_lst)
     # iterate through list of sites that have been scanned
     for s_dir in site_dir_lst:
+        # get timestamp based on folders
+        t_stamp_list = []
+        t_stamps = os.listdir(s_dir)
+        # create full names to check if they are directories.
+        for t_stamp in t_stamps:
+            t_path = os.path.join(OUTPUT_DIR, s_dir, t_stamp)
+            check_path = os.path.isdir(t_path)
+            print(f'Checking path {t_path} {check_path}')
+            # if the path exists append the timestamp
+            if os.path.isdir(t_path):
+                print(f'{t_path} is a dir')
+                t_stamp_list.append(t_stamp)
+        t_stamp_list.sort()
+        print(t_stamp_list)
         # find txt files recursively starting at the URL path
         txt_lst = []
         for txt in find_files(s_dir, '*.txt'):
-            print(f'Found .txt files {txt}')
+            # print(f'Found .txt files {txt}')
             txt_lst.append(txt)
         txt_lst.sort()
         # find html files recursively starting at the URL path
         html_lst = []
         for html in find_files(s_dir, '*.html'):
-            print(f'Found .html files {html}')
+            # print(f'Found .html files {html}')
             html_lst.append(html)
         html_lst.sort()
         # zip txt and html lists together
-        zipper = zip(html_lst, txt_lst)
+        zipper = zip(html_lst, txt_lst, t_stamp_list)
         # create items.csv file in the root of the scanned site
         with open(f'{s_dir}{slash}scan_index.csv', 'w') as f:
-            csv_header = ['html', 'links', 'comparison']
+            csv_header = ['html', 'links', 'time_stamp', 'comparison']
             writer = csv.writer(f, delimiter=',')
             writer.writerow(csv_header)
             writer.writerows(zipper)
