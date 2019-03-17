@@ -47,20 +47,20 @@ def scan_output():
             if os.path.isdir(t_path):
                 print(f'{t_path} is a dir')
                 t_stamp_list.append(t_stamp)
-        t_stamp_list.sort()
+        t_stamp_list.sort(reverse=True)
         print(t_stamp_list)
         # find txt files recursively starting at the URL path
         txt_lst = []
         for txt in find_files(s_dir, '*.txt'):
             # print(f'Found .txt files {txt}')
             txt_lst.append(txt)
-        txt_lst.sort()
+        txt_lst.sort(reverse=True)
         # find html files recursively starting at the URL path
         html_lst = []
         for html in find_files(s_dir, '*.html'):
             # print(f'Found .html files {html}')
             html_lst.append(html)
-        html_lst.sort()
+        html_lst.sort(reverse=True)
         # zip txt and html lists together
         zipper = zip(html_lst, txt_lst, t_stamp_list)
         # create items.csv file in the root of the scanned site
@@ -104,7 +104,7 @@ def the_differ():
         # set resp1 and resp2 as filenames to be used for comparison
         for resp1, resp2 in zip(resp_list[::], resp_list[1::]):
             # compare the logs
-            log_compare(resp1, resp2)
+            # log_compare(resp1, resp2)
             # if the log comparison returns false then we are going to run file_diff() against them
             if not log_compare(resp1, resp2):
                 # read the html of both files
@@ -116,7 +116,13 @@ def the_differ():
                 print()
                 print('Here are the diffs')
                 print(html_diffs)
-
+                # get the directory of the file to save dif
+                dif_dir = os.path.dirname(resp1)
+                t_dif = os.path.split(os.path.abspath(resp2))
+                t_dif2 = os.path.split(os.path.abspath(t_dif[0]))
+                print(f't dif2 {t_dif2}')
+                with open(f'{dif_dir}{slash}{t_dif2[1]}.dif', 'w') as f:
+                    print(html_diffs, file=f)
 
 
 

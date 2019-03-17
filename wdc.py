@@ -13,6 +13,6 @@ test_url = 'https://joshsisto.com'
 
 if __name__ == '__main__':
     # main(test_url)
-    scan_output()
-    # the_differ()
+    # scan_output()
+    the_differ()
 
