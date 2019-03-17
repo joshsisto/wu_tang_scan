@@ -5,6 +5,8 @@ and web development skills.
 #### wdc
 wdc stands for Website Difference Checker. wdc takes a website URL and scans it for changes.
 
+clone this repo. execute ```sh run_wdc``` to download site
+
 ##### network-sniffer.py
 Uses nmap to scan network
 

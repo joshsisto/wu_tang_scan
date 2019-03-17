@@ -33,6 +33,7 @@ def url_checker(url):
         return url_name
     else:
         print('URL check failed. not valid http or https URL')
+        print(f'Bad URL:{url}')
         return False
 
 
