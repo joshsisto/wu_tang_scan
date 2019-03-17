@@ -29,12 +29,11 @@ def scan_output():
     for sc_site in scanned_sites:
         # don't get hidden folders
         if not sc_site.startswith('.'):
-            print(sc_site)
             site_dir = os.path.join(OUTPUT_DIR, sc_site)
             site_dir_lst.append(site_dir)
-    print(site_dir_lst)
     # iterate through list of sites that have been scanned
     for s_dir in site_dir_lst:
+        print(f'Scanning directory {s_dir}')
         # get timestamp based on folders
         t_stamp_list = []
         t_stamps = os.listdir(s_dir)
@@ -48,7 +47,6 @@ def scan_output():
                 print(f'{t_path} is a dir')
                 t_stamp_list.append(t_stamp)
         t_stamp_list.sort(reverse=True)
-        print(t_stamp_list)
         # find txt files recursively starting at the URL path
         txt_lst = []
         for txt in find_files(s_dir, '*.txt'):
@@ -120,7 +118,8 @@ def the_differ():
                 dif_dir = os.path.dirname(resp1)
                 t_dif = os.path.split(os.path.abspath(resp2))
                 t_dif2 = os.path.split(os.path.abspath(t_dif[0]))
-                print(f't dif2 {t_dif2}')
+                # the 3 lines above this could be done better
+                # save dif file using timestamp name of the site it was scanned against
                 with open(f'{dif_dir}{slash}{t_dif2[1]}.dif', 'w') as f:
                     print(html_diffs, file=f)
 

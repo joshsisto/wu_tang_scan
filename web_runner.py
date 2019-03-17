@@ -25,14 +25,14 @@ def url_checker(url):
     """Check if URL starts with http or https"""
     if url.startswith(http_req):
         url_name = url[7:]
-        print('http')
+        print('URL check passed. Using http')
         return url_name
     if url.startswith(https_req):
         url_name = url[8:]
-        print('https')
+        print('URL check passed. Using https')
         return url_name
     else:
-        print('not valid http or https URL')
+        print('URL check failed. not valid http or https URL')
         return False
 
 
