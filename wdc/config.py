@@ -59,6 +59,21 @@ def get_tstamp():
     return st
 
 
+def compare_tstamp(time_1, time_2):
+    """compare two timestamps and return the difference in seconds and human readable (days, hours, minutes, seconds)"""
+    t1 = datetime.datetime.strptime(time_1, '%Y-%m-%d_%H-%M-%S')
+    t2 = datetime.datetime.strptime(time_2, '%Y-%m-%d_%H-%M-%S')
+    t_diff = t1 - t2
+    day = t_diff.seconds // (24 * 3600)
+    t_time = t_diff.seconds % (24 * 3600)
+    hour = t_time // 3600
+    t_time %= 3600
+    minutes = t_time // 60
+    t_time %= 60
+    seconds = t_time
+    return t_diff.seconds, f'{day} day(s) {hour} hour(s) {minutes} minute(s) {seconds} second(s)'
+
+
 def ensure_dir(file_path):
     try:
         print(f'checking if {file_path} exists\n')

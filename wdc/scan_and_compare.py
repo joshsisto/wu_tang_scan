@@ -8,7 +8,8 @@ from config import (
     get_platform,
     ensure_dir,
     get_tstamp,
-    find_files
+    find_files,
+    compare_tstamp
 )
 
 
@@ -22,7 +23,7 @@ if platform == 'Windows':
 def scan_output():
     """Scan the output directory"""
     print(f'using scan_output() to scan the output directory: {OUTPUT_DIR} for previously scanned sites')
-    # get list of directories in output. These are the sites that have been scanned
+    # get list of directories in output. 0These are the sites that have been scanned
     scanned_sites = os.listdir(OUTPUT_DIR)
     # create a list of full path names
     site_dir_lst = []
@@ -47,6 +48,12 @@ def scan_output():
                 print(f'{t_path} is a dir')
                 t_stamp_list.append(t_stamp)
         t_stamp_list.sort(reverse=True)
+        # compare the timestamps
+        t_diff_list = []
+        for time_1, time_2 in zip(t_stamp_list[::], t_stamp_list[1::]):
+            time_diff = compare_tstamp(time_1, time_2)
+            t_diff_list.append(time_diff)
+        print(t_diff_list)
         # find txt files recursively starting at the URL path
         txt_lst = []
         for txt in find_files(s_dir, '*.txt'):
@@ -60,10 +67,10 @@ def scan_output():
             html_lst.append(html)
         html_lst.sort(reverse=True)
         # zip txt and html lists together
-        zipper = zip(html_lst, txt_lst, t_stamp_list)
+        zipper = zip(html_lst, txt_lst, t_stamp_list, t_diff_list)
         # create items.csv file in the root of the scanned site
         with open(f'{s_dir}{slash}scan_index.csv', 'w') as f:
-            csv_header = ['html', 'links', 'time_stamp', 'comparison']
+            csv_header = ['html', 'links', 'time_stamp', 'time_difference', 'comparison']
             writer = csv.writer(f, delimiter=',')
             writer.writerow(csv_header)
             writer.writerows(zipper)
@@ -122,8 +129,4 @@ def the_differ():
                 # save dif file using timestamp name of the site it was scanned against
                 with open(f'{dif_dir}{slash}{t_dif2[1]}.dif', 'w') as f:
                     print(html_diffs, file=f)
-
-
-
-
 
