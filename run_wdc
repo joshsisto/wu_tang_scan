@@ -1,1 +1,1 @@
-python3 ./wdc/wdc.py
+./wdc/wdc.py "$@"
