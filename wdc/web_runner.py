@@ -1,5 +1,6 @@
 
 import os
+import sys
 import requests
 from bs4 import BeautifulSoup
 
@@ -34,7 +35,8 @@ def url_checker(url):
     else:
         print('URL check failed. not valid http or https URL')
         print(f'Bad URL:{url}')
-        return False
+        sys.exit()
+        # return False
 
 
 def download_url(url):

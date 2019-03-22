@@ -8,7 +8,8 @@ from config import (
     get_platform,
     ensure_dir,
     get_tstamp,
-    find_files
+    find_files,
+    compare_tstamp
 )
 
 
@@ -47,11 +48,19 @@ def scan_output():
                 print(f'{t_path} is a dir')
                 t_stamp_list.append(t_stamp)
         t_stamp_list.sort(reverse=True)
+        # compare the timestamps
+        t_diff_list = []
+        for time_1, time_2 in zip(t_stamp_list[::], t_stamp_list[1::]):
+            time_diff = compare_tstamp(time_1, time_2)
+            t_diff_list.append(time_diff)
+        print(t_diff_list)
         # find txt files recursively starting at the URL path
+        site_list = []
         txt_lst = []
         for txt in find_files(s_dir, '*.txt'):
             # print(f'Found .txt files {txt}')
             txt_lst.append(txt)
+            site_list.append(os.path.basename(s_dir))
         txt_lst.sort(reverse=True)
         # find html files recursively starting at the URL path
         html_lst = []
@@ -60,10 +69,10 @@ def scan_output():
             html_lst.append(html)
         html_lst.sort(reverse=True)
         # zip txt and html lists together
-        zipper = zip(html_lst, txt_lst, t_stamp_list)
+        zipper = zip(html_lst, txt_lst, t_stamp_list, t_diff_list, site_list)
         # create items.csv file in the root of the scanned site
         with open(f'{s_dir}{slash}scan_index.csv', 'w') as f:
-            csv_header = ['html', 'links', 'time_stamp', 'comparison']
+            csv_header = ['html', 'links', 'time_stamp', 'time_difference', 'site', 'comparison']
             writer = csv.writer(f, delimiter=',')
             writer.writerow(csv_header)
             writer.writerows(zipper)
@@ -86,8 +95,8 @@ def the_differ():
     """read scan_index.csv first column to compare filenames and return differences"""
     # scan for csv files (currently scan_index) this needs to be updated to only grab scan index
     index_csv = []
-    for s_csv in find_files(OUTPUT_DIR, '*.csv'):
-        print(f'Found .csv files {s_csv}')
+    for s_csv in find_files(OUTPUT_DIR, 'scan_index.csv'):
+        print(f'Found scan_index.csv {s_csv}')
         index_csv.append(s_csv)
     # iterate through the csv files scanned and read them
     for si in index_csv:
@@ -124,6 +133,36 @@ def the_differ():
                     print(html_diffs, file=f)
 
 
+def check_last_scan():
+    # scan for csv files (currently scan_index) this needs to be updated to only grab scan index
+    index_csv = []
+    last_scan_list = []
+    for s_csv in find_files(OUTPUT_DIR, 'scan_index.csv'):
+        # print(f'Found scan_index.csv {s_csv}')
+        index_csv.append(s_csv)
+    # iterate through the csv files scanned and read them
+    for si in index_csv:
+        csv_file = open(si)
+        reader = csv.reader(csv_file, delimiter=',')
+        # append the first row containing the most recent scan
+        for ind, row in enumerate(reader):
+            if ind == 1:
+                last_scan_list.append(row)
+            else:
+                continue
+    print()
+    for scan in last_scan_list:
+        print(f'Site: {scan[4]} \nLast Scan: {scan[3]} \n')
 
 
+def check_for_difs():
+    dif_lst = []
+    dif_check = find_files(OUTPUT_DIR, '*.dif')
+    if len(list(dif_check)) > 0:
+        print("Found .dif files")
+        for dif in find_files(OUTPUT_DIR, '*.dif'):
+            print(f'Found .dif files {dif}')
+            dif_lst.append(dif)
+    dif_lst.sort(reverse=True)
+    print(f'List of dif files \n {dif_lst}')
 

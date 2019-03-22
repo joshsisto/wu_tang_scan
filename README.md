@@ -2,15 +2,16 @@
 I created this repo to sharpen my python, git, network,
 and web development skills.
 
-#### wdc
+## wdc
 wdc stands for Website Difference Checker. wdc takes a website URL and scans it for changes.
 
-clone this repo. execute ```sh run_wdc``` to download site
+clone this repo. execute ```./run_wdc <site>``` to download site
 
-##### network-sniffer.py
-Uses nmap to scan network
+#### Example
+```./run_wdc https://joshsisto.com```
 
-# todo
-- Timestamp comparison
-- Setup command line functionality
-- Check most recent folder for diffs
+Files are stored in /wdc/output/\<site\>/\<time stamp>
+
+#### Development
+
+This is mainly being developed on a Mac OS. I want this to be a cross platform solution. If you run into any errors please submit a pull request. 

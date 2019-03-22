@@ -1,14 +1,15 @@
+#!/usr/bin/env python3
 
 import sys
 from web_runner import download_url
-from scan_and_compare import the_differ, scan_output
+from scan_and_compare import the_differ, scan_output, check_last_scan
 
 
 __AUTHOR__ = 'Josh Sisto <joshsisto@gmail.com>'
-__VERSION__ = 'v0.1'
+__VERSION__ = 'v0.01'
 __DESCRIPTION__ = 'wdc usage:  Scan website for changes'
 __DOCUMENTATION__ = 'https://github.com/llamafarmer/wu_tang_scan'
-__EXAMPLE__ = 'python3 wdc.py "https://joshsisto.com"'
+__EXAMPLE__ = './run_wdc https://joshsisto.com'
 
 
 def wdc_help():
@@ -24,5 +25,6 @@ if __name__ == '__main__':
         download_url(test_url)
         scan_output()
         the_differ()
+        check_last_scan()
     else:
         wdc_help()
