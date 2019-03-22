@@ -68,22 +68,6 @@ def scan_output():
             # print(f'Found .html files {html}')
             html_lst.append(html)
         html_lst.sort(reverse=True)
-
-        ### Work in Progress ###
-        # dif_lst = []
-        # dif_check = find_files(s_dir, '*.dif')
-        # print(f'+++++++ This is Diff Check +++++++ \n\n {len(list(dif_check))} \n\n +++++++++++ This is Diff Check +++++++++++')
-
-        # if len(list(dif_check)) > 0:
-        #     print("Found .dif files")
-        #     for dif in find_files(s_dir, '*.dif'):
-        #         print(f'Found .dif files {dif}')
-        #         dif_lst.append(dif)
-        # dif_lst.sort(reverse=True)
-
-        # print(f'++++++++++++++ \n\n {dif_lst} \n\n +++++++++++++++++')
-        ### Work in Progress ###
-
         # zip txt and html lists together
         zipper = zip(html_lst, txt_lst, t_stamp_list, t_diff_list, site_list)
         # create items.csv file in the root of the scanned site
@@ -169,4 +153,16 @@ def check_last_scan():
     print()
     for scan in last_scan_list:
         print(f'Site: {scan[4]} \nLast Scan: {scan[3]} \n')
+
+
+def check_for_difs():
+    dif_lst = []
+    dif_check = find_files(OUTPUT_DIR, '*.dif')
+    if len(list(dif_check)) > 0:
+        print("Found .dif files")
+        for dif in find_files(OUTPUT_DIR, '*.dif'):
+            print(f'Found .dif files {dif}')
+            dif_lst.append(dif)
+    dif_lst.sort(reverse=True)
+    print(f'List of dif files \n {dif_lst}')
 
