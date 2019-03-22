@@ -35,11 +35,11 @@ if platform == 'Windows':
 
 def ensure_dir(file_path):
     try:
-        print(f'checking if {file_path} exists')
+        print(f'checking if {file_path} exists\n')
         directory = os.path.dirname(file_path)
         if not os.path.exists(directory):
             print(f'directory {file_path} does not exist. Creating...')
-            os.makedirs(directory)
+            os.makedirs(file_path)
     except Exception as x:
         print(f"something fucked up {x}")
 
@@ -54,7 +54,7 @@ def get_tstamp():
     return st
 
 
-def check_site_change(url):
+def download_url(url):
     """Check url for web changes"""
     # Get url name without https://
     url_name = url[8:]
@@ -68,12 +68,26 @@ def check_site_change(url):
     # save downloaded page as a .txt file
     with open(f'{logs_dir}{url_name}__{tstamp}.txt', 'w') as f:
         print(response.text, file=f)
+    # use beautiful soup to extract links
+    links = []
+    soup = BeautifulSoup(response.text, 'html.parser')
+    tags = soup.find_all('a')
+    # append links to links list
+    for tag in tags:
+        links.append(tag.get('href'))
+    # get only unique values and sort
+    my_set = set(links)
+    u_links = list(my_set)
+    u_links.sort()
+    # save links as a .lnk file
+    with open(f'{logs_dir}{url_name}__{tstamp}.lnk', 'w') as f:
+        for list_item in u_links:
+            f.write(f'{list_item}\n')
 
 
 def log_compare(log_1, log_2):
     """compare log_1 and log_2 for differences"""
     compare = filecmp.cmp(log_1, log_2, shallow=True)
-    print(compare)
     return compare
 
 
@@ -81,7 +95,6 @@ def file_diff(text1, text2):
     """compare files for differences"""  # this is currently comparing filenames instead of the files
     diff = difflib.context_diff(text1, text2)
     delta = ''.join(diff)
-    print(delta)
     return delta
 
 
@@ -110,7 +123,7 @@ def txt_sites(site, time_stamp):
     return site + '__' + time_stamp + '.txt'
 
 
-def main():
+def scan_logs():
     logs = check_logs()
     if len(logs) > 1:
         # data frame column names
@@ -123,25 +136,48 @@ def main():
         df = df.sort_values(['file_name'], ascending=False)
         # reset the index after sorting
         df = df.reset_index(drop=True)
+
+        # ask if you want to check for matching files and create .dif files
+        create_diffs = input('Would you like to save .dif files? y/n  ').lower()
+        # create new blank column for diffs_file - This will be used to save .dif files
+        df = df.assign(diffs_file="")
+        if create_diffs == 'y':
+            # iterate through rows of df
+            for i in range(1, len(df)):
+                # if the sites match compare the files using log_compare()
+                if df.site.loc[i-1] == df.site.loc[i]:
+                    print(f'comparing {logs_dir + df.file_name.loc[i-1]} \n'
+                          f'against   {logs_dir + df.file_name.loc[i]} for changes')
+                    log_compare(logs_dir + df.file_name.loc[i-1], logs_dir + df.file_name.loc[i])
+                    # if the logs don't match compare them using file_diff()
+                    if log_compare(logs_dir + df.file_name.loc[i-1], logs_dir + df.file_name.loc[i]) == False:
+                        print('Printing differences')
+                        # since the logs don't match we are going to compare them. Each log is set as variable text1 text2
+                        text1 = open(logs_dir + df.file_name.loc[i-1], "r").readlines()
+                        text2 = open(logs_dir + df.file_name.loc[i], "r").readlines()
+                        # compare the two files and save the output as diffs
+                        diffs = file_diff(text1, text2)
+                        # print .dif file based off of filename and new timestamp
+                        print(f'Creating file {logs_dir}{df.file_name.loc[i-1]}_{get_tstamp()}.dif')
+                        print()
+                        # add .dif file to diffs_file column
+                        df.diffs_file.loc[i-1] = f'{df.file_name.loc[i-1]}_{get_tstamp()}.dif'
+                        # create .dif log file
+                        with open(f'{logs_dir}{df.file_name.loc[i-1]}_{get_tstamp()}.dif', 'w') as f:
+                            print(diffs, file=f)
+        # print dataframe
         print(df)
-        # iterate through rows of df
-        for i in range(1, len(df)):
-            # if the sites match compare the files using log_compare()
-            if df.site.loc[i-1] == df.site.loc[i]:
-                print(f'comparing {logs_dir + df.file_name.loc[i-1]} \n'
-                      f'against   {logs_dir + df.file_name.loc[i]} for changes')
-                log_compare(logs_dir + df.file_name.loc[i-1], logs_dir + df.file_name.loc[i])
-                # if the logs don't match compare them using file_diff()
-                if log_compare(logs_dir + df.file_name.loc[i-1], logs_dir + df.file_name.loc[i]) == False:
-                    print('Printing differences')
-                    text1 = open(logs_dir + df.file_name.loc[i-1], "r").read()
-                    text2 = open(logs_dir + df.file_name.loc[i], "r").read()
-                    file_diff(text1, text2)
+        # write dataframe to csv
+        df.to_csv(f'{logs_dir}df.{get_tstamp()}.csv')
 
 
-site_2_scan = "https://joshsisto.com"
+site_2_scan = "https://resume.joshsisto.com"
+scan_site = input(f'Would you like to scan {site_2_scan}?\n\ny/n  ').lower()
+parse_logs = input(f'Would you like to parse {logs_dir}?\n\ny/n  ').lower()
+
 
 if __name__ == '__main__':
-    check_site_change(site_2_scan)
-    main()
-
+    if scan_site == 'y':
+        download_url(site_2_scan)
+    if parse_logs == 'y':
+        scan_logs()
