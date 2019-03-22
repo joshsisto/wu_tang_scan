@@ -9,7 +9,7 @@ __AUTHOR__ = 'Josh Sisto <joshsisto@gmail.com>'
 __VERSION__ = 'v0.01'
 __DESCRIPTION__ = 'wdc usage:  Scan website for changes'
 __DOCUMENTATION__ = 'https://github.com/llamafarmer/wu_tang_scan'
-__EXAMPLE__ = 'python3 wdc.py "https://joshsisto.com"'
+__EXAMPLE__ = './run_wdc https://joshsisto.com'
 
 
 def wdc_help():
