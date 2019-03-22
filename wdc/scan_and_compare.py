@@ -100,9 +100,6 @@ def the_differ():
         index_csv.append(s_csv)
     # iterate through the csv files scanned and read them
     for si in index_csv:
-        # remove empty lines from csv
-        remove_empty_lines(si)
-        # open newly cleaned file
         csv_file = open(si)
         reader = csv.reader(csv_file, delimiter=',')
         # save only the first column (html files to be compared)
@@ -169,14 +166,3 @@ def check_for_difs():
     dif_lst.sort(reverse=True)
     print(f'List of dif files \n {dif_lst}')
 
-
-def remove_empty_lines(filename):
-    if not os.path.isfile(filename):
-        print("{} does not exist ".format(filename))
-        return
-    with open(filename) as filehandle:
-        lines = filehandle.readlines()
-
-    with open(filename, 'w') as filehandle:
-        lines = filter(lambda x: x.strip(), lines)
-        filehandle.writelines(lines)
