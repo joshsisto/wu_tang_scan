@@ -55,7 +55,6 @@ def scan_output():
             time_diff = compare_tstamp(time_1, time_2)
             t_diff_list.append(time_diff)
         t_diff_list.append('')
-        print(t_diff_list)
         # find txt files recursively starting at the URL path
         site_list = []
         txt_lst = []
@@ -72,8 +71,6 @@ def scan_output():
             # print(f'Found .html files {html}')
             html_lst.append(html)
         html_lst.sort(reverse=True)
-        html_lst.append('')
-        print(f'=============={html_lst}==============')
         # zip txt and html lists together
         zipper = zip(html_lst, txt_lst, t_stamp_list, t_diff_list, site_list)
         # for item in zipper:
@@ -131,15 +128,16 @@ def the_differ():
                 # set variable html_diffs and compare files
                 html_diffs = file_diff(text1, text2)
                 print(f'{resp1} does not match {resp2}')
-                print()
-                print('Here are the diffs')
-                print(html_diffs)
+                # print('Here are the diffs')
+                # print(html_diffs)
                 # get the directory of the file to save dif
                 dif_dir = os.path.dirname(resp1)
                 t_dif = os.path.split(os.path.abspath(resp2))
                 t_dif2 = os.path.split(os.path.abspath(t_dif[0]))
                 # the 3 lines above this could be done better
                 # save dif file using timestamp name of the site it was scanned against
+                print(f'saving file {dif_dir}{slash}{t_dif2[1]}.dif')
+                print()
                 with open(f'{dif_dir}{slash}{t_dif2[1]}.dif', 'w') as f:
                     print(html_diffs, file=f)
 
@@ -188,5 +186,3 @@ def remove_empty_lines(filename):
         lines = filter(lambda x: x.strip(), lines)
         filehandle.writelines(lines)
 
-
-scan_output()
