@@ -48,11 +48,13 @@ def scan_output():
                 print(f'{t_path} is a dir')
                 t_stamp_list.append(t_stamp)
         t_stamp_list.sort(reverse=True)
+        # t_stamp_list.append('')
         # compare the timestamps
         t_diff_list = []
         for time_1, time_2 in zip(t_stamp_list[::], t_stamp_list[1::]):
             time_diff = compare_tstamp(time_1, time_2)
             t_diff_list.append(time_diff)
+        t_diff_list.append('')
         print(t_diff_list)
         # find txt files recursively starting at the URL path
         site_list = []
@@ -62,14 +64,20 @@ def scan_output():
             txt_lst.append(txt)
             site_list.append(os.path.basename(s_dir))
         txt_lst.sort(reverse=True)
+        txt_lst.append('')
+        site_list.append('')
         # find html files recursively starting at the URL path
         html_lst = []
         for html in find_files(s_dir, '*.html'):
             # print(f'Found .html files {html}')
             html_lst.append(html)
         html_lst.sort(reverse=True)
+        html_lst.append('')
+        print(f'=============={html_lst}==============')
         # zip txt and html lists together
         zipper = zip(html_lst, txt_lst, t_stamp_list, t_diff_list, site_list)
+        # for item in zipper:
+        #     print(f'zipper item {item}')
         # create items.csv file in the root of the scanned site
         with open(f'{s_dir}{slash}scan_index.csv', 'w') as f:
             csv_header = ['html', 'links', 'time_stamp', 'time_difference', 'site', 'comparison']
@@ -176,7 +184,9 @@ def remove_empty_lines(filename):
         return
     with open(filename) as filehandle:
         lines = filehandle.readlines()
-
     with open(filename, 'w') as filehandle:
         lines = filter(lambda x: x.strip(), lines)
         filehandle.writelines(lines)
+
+
+scan_output()
