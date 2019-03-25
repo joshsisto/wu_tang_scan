@@ -164,6 +164,24 @@ def check_last_scan():
         print(f'Site: {scan[4]} \nLast Scan: {scan[3]} \n')
 
 
+def check_last_scan_2(site):
+    # scan for csv files (currently scan_index) this needs to be updated to only grab scan index
+    i_csv = os.path.join(OUTPUT_DIR, site, "scan_index.csv")
+    csv_file = open(i_csv)
+    reader = csv.reader(csv_file, delimiter=',')
+    last_scan = None
+    for ind, row in enumerate(reader):
+        if ind == 1:
+            last_scan = row
+        else:
+            continue
+    print()
+    ls_tstamp = last_scan[2]
+    print(ls_tstamp)
+    last_scan_time = compare_tstamp(get_tstamp(), ls_tstamp)
+    print(last_scan_time[1])
+
+
 def check_for_difs():
     dif_lst = []
     dif_check = find_files(OUTPUT_DIR, '*.dif')
