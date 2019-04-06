@@ -76,9 +76,9 @@ def compare_tstamp(time_1, time_2):
 
 def ensure_dir(file_path):
     try:
-        print(f'checking if {file_path} exists\n')
+        # print(f'checking if {file_path} exists\n')
         if not os.path.exists(file_path):
-            print(f'directory {file_path} does not exist. Creating...')
+            # print(f'directory {file_path} does not exist. Creating...')
             os.makedirs(file_path)
     except Exception as x:
         print(f"something fucked up {x}")
