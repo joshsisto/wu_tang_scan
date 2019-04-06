@@ -22,7 +22,7 @@ if platform == 'Windows':
 
 def scan_output():
     """Scan the output directory"""
-    print(f'using scan_output() to scan the output directory: {OUTPUT_DIR} for previously scanned sites')
+    # print(f'using scan_output() to scan the output directory: {OUTPUT_DIR} for previously scanned sites')
     # get list of directories in output. These are the sites that have been scanned
     scanned_sites = os.listdir(OUTPUT_DIR)
     # create a list of full path names
@@ -34,7 +34,7 @@ def scan_output():
             site_dir_lst.append(site_dir)
     # iterate through list of sites that have been scanned
     for s_dir in site_dir_lst:
-        print(f'Scanning directory {s_dir}')
+        # print(f'Scanning directory {s_dir}')
         # get timestamp based on folders
         t_stamp_list = []
         t_stamps = os.listdir(s_dir)
@@ -42,10 +42,10 @@ def scan_output():
         for t_stamp in t_stamps:
             t_path = os.path.join(OUTPUT_DIR, s_dir, t_stamp)
             check_path = os.path.isdir(t_path)
-            print(f'Checking path {t_path} {check_path}')
+            # print(f'Checking path {t_path} {check_path}')
             # if the path exists append the timestamp
             if os.path.isdir(t_path):
-                print(f'{t_path} is a dir')
+                # print(f'{t_path} is a dir')
                 t_stamp_list.append(t_stamp)
         t_stamp_list.sort(reverse=True)
         # t_stamp_list.append('')
@@ -101,14 +101,14 @@ def the_differ():
     # scan for csv files (currently scan_index) this needs to be updated to only grab scan index
     index_csv = []
     for s_csv in find_files(OUTPUT_DIR, 'scan_index.csv'):
-        print(f'Found scan_index.csv {s_csv}')
+        # print(f'Found scan_index.csv {s_csv}')
         index_csv.append(s_csv)
     # iterate through the csv files scanned and read them
     for si in index_csv:
         # remove empty lines from csv
         remove_empty_lines(si)
         # open newly cleaned file
-        csv_file = open(si)
+        csv_file = open(si, encoding='utf-8')
         reader = csv.reader(csv_file, delimiter=',')
         # save only the first column (html files to be compared)
         resp_list = []
@@ -127,53 +127,32 @@ def the_differ():
                 text2 = open(resp2, 'r').readlines()
                 # set variable html_diffs and compare files
                 html_diffs = file_diff(text1, text2)
-                print(f'{resp1} does not match {resp2}')
-                # print('Here are the diffs')
-                # print(html_diffs)
-                # get the directory of the file to save dif
+                # print(f'{resp1} does not match {resp2}')
                 dif_dir = os.path.dirname(resp1)
                 t_dif = os.path.split(os.path.abspath(resp2))
                 t_dif2 = os.path.split(os.path.abspath(t_dif[0]))
                 # the 3 lines above this could be done better
                 # save dif file using timestamp name of the site it was scanned against
-                print(f'saving file {dif_dir}{slash}{t_dif2[1]}.dif')
-                print()
+                # print(f'saving file {dif_dir}{slash}{t_dif2[1]}.dif')
+                # print()
                 with open(f'{dif_dir}{slash}{t_dif2[1]}.dif', 'w') as f:
                     print(html_diffs, file=f)
 
 
-def check_last_scan():
-    # scan for csv files (currently scan_index) this needs to be updated to only grab scan index
-    index_csv = []
+def check_last_scan(site):
     last_scan_list = []
-    for s_csv in find_files(OUTPUT_DIR, 'scan_index.csv'):
-        # print(f'Found scan_index.csv {s_csv}')
-        index_csv.append(s_csv)
-    # iterate through the csv files scanned and read them
-    for si in index_csv:
-        csv_file = open(si)
-        reader = csv.reader(csv_file, delimiter=',')
-        # append the first row containing the most recent scan
-        for ind, row in enumerate(reader):
-            if ind == 1:
-                last_scan_list.append(row)
-            else:
-                continue
+    index_csv = os.path.join(OUTPUT_DIR, site, 'scan_index.csv')
+    csv_file = open(index_csv)
+    reader = csv.reader(csv_file, delimiter=',')
+    # append the first row containing the most recent scan
+    for ind, row in enumerate(reader):
+        if ind == 1:
+            last_scan_list.append(row)
+        else:
+            continue
     print()
     for scan in last_scan_list:
         print(f'Site: {scan[4]} \nLast Scan: {scan[3]} \n')
-
-
-def check_for_difs():
-    dif_lst = []
-    dif_check = find_files(OUTPUT_DIR, '*.dif')
-    if len(list(dif_check)) > 0:
-        print("Found .dif files")
-        for dif in find_files(OUTPUT_DIR, '*.dif'):
-            print(f'Found .dif files {dif}')
-            dif_lst.append(dif)
-    dif_lst.sort(reverse=True)
-    print(f'List of dif files \n {dif_lst}')
 
 
 def remove_empty_lines(filename):
@@ -185,4 +164,15 @@ def remove_empty_lines(filename):
     with open(filename, 'w') as filehandle:
         lines = filter(lambda x: x.strip(), lines)
         filehandle.writelines(lines)
+
+
+def recent_change(site):
+    dif_dir = os.path.join(OUTPUT_DIR, site)
+    the_dirs = [x[0] for x in os.walk(dif_dir)]
+    the_dirs.sort(reverse=True)
+    # print(the_dirs_2[0])
+    recent_scan = the_dirs[0]
+    dif_check = find_files(recent_scan, '*.dif')
+    if len(list(dif_check)) > 0:
+        print(f'Changes detected since last scan \nCheck .dif file for changes {recent_scan}')
 

@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 
 import sys
-from web_runner import download_url
-from scan_and_compare import the_differ, scan_output, check_last_scan
+from web_runner import download_url, url_checker
+from scan_and_compare import the_differ, scan_output, check_last_scan, recent_change
 
 
 __AUTHOR__ = 'Josh Sisto <joshsisto@gmail.com>'
@@ -22,9 +22,11 @@ def wdc_help():
 if __name__ == '__main__':
     if len(sys.argv) > 1:
         test_url = sys.argv[1]
+        site = url_checker(test_url)
         download_url(test_url)
         scan_output()
         the_differ()
-        check_last_scan()
+        check_last_scan(site)
+        recent_change(site)
     else:
         wdc_help()
